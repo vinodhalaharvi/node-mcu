@@ -1,0 +1,13 @@
+# Go
+/server/server
+*.test
+*.out
+
+# Arduino build artifacts
+/firmware/**/build/
+*.bin
+*.elf
+
+# secrets — keep wifi creds out of git
+secrets.h
+.env
