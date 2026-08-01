@@ -31,13 +31,17 @@ void loop() {
   http.begin(client, URL);
   http.addHeader("Content-Type", "application/json");
 
-  char body[128];
+  // WiFi.RSSI() is a real onboard measurement: signal strength (dBm) to the
+  // router, which changes as the board moves. heap is chip telemetry that
+  // drifts as the WiFi stack allocates. No external sensor required.
+  long rssi = WiFi.RSSI();
+  char body[160];
   snprintf(body, sizeof(body),
-    "{\"device\":\"node-1\",\"uptime_ms\":%lu,\"value\":%d}",
-    millis(), analogRead(A0));
+    "{\"device\":\"node-1\",\"uptime_ms\":%lu,\"rssi\":%ld,\"heap\":%u}",
+    millis(), rssi, ESP.getFreeHeap());
 
   int code = http.POST(body);
-  Serial.printf("POST -> %d\n", code);
+  Serial.printf("POST -> %d  (rssi=%ld dBm)\n", code, rssi);
   http.end();
   delay(5000);
 }
