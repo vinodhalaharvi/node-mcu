@@ -11,3 +11,9 @@
 # secrets — keep wifi creds out of git
 secrets.h
 .env
+
+# Local stack runtime data (broker + Home Assistant) — keep the folders, ignore contents
+broker/data/*
+!broker/data/.gitkeep
+homeassistant/config/*
+!homeassistant/config/.gitkeep
